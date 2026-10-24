@@ -23,7 +23,7 @@ jobs:
       - run: bun install --frozen-lockfile
       - run: bun run build
       # SPA fallback so routes like /about work on refresh
-      - run: cp dist/index.html dist/404.html
+      - run: find dist -maxdepth 3 | head -50
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
