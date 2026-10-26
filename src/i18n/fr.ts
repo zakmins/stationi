@@ -11,7 +11,7 @@ export const fr: Dict = {
     cta: "Demander un pilote",
     cta2: "Voir le fonctionnement",
     badges: ["Incubé au V2V Incubator, ENSIA", "ProtoMarket 2026 – MESRS"],
-    visual: { camera: "Caméra LPR", box: "Boîtier local", barrier: "Votre barrière", allowed: "Accès autorisé", offline: "Fonctionne hors ligne" },
+    visual: { camera: "Caméra de reconnaissance des plaques d’immatriculation", box: "Boîtier local", barrier: "Votre barrière", allowed: "Accès autorisé", offline: "Fonctionne hors ligne" },
   },
   numbers: [
     { value: 157, decimals: 0, suffix: "", label: "usagers interrogés à Alger" },
@@ -67,13 +67,13 @@ export const fr: Dict = {
     eyebrow: "Fonctionnement",
     title: "Cinq étapes, toutes sur site.",
     steps: [
-      { title: "Caméra LPR", text: "Obturation rapide, WDR, infrarouge — lit les plaques de jour comme de nuit." },
+      { title: "Caméra de reconnaissance des plaques d’immatriculation", text: "Obturation rapide, WDR, infrarouge — lit les plaques de jour comme de nuit." },
       { title: "Boîtier local", text: "Détection + OCR entraînés pour les plaques algériennes." },
       { title: "Décision locale", text: "Liste d'autorisation embarquée, aucun appel cloud." },
       { title: "Contact sec", text: "Déclenche votre barrière existante." },
       { title: "Journal local", text: "Synchronisation différée au retour de la connexion." },
     ],
-    flow: ["Caméra LPR", "Boîtier local", "Identification", "Décision", "Barrière"],
+    flow: ["Reconnaissance des plaques", "Boîtier local", "Identification", "Décision", "Barrière"],
     stepLabel: "Étape",
   },
   resilience: {

@@ -9,7 +9,7 @@ export const en = {
     cta: "Request a pilot",
     cta2: "See how it works",
     badges: ["Incubated at V2V Incubator, ENSIA", "ProtoMarket 2026 – MESRS"],
-    visual: { camera: "LPR camera", box: "Local box", barrier: "Your barrier", allowed: "Access granted", offline: "Works offline" },
+    visual: { camera: "License plate recognition camera", box: "Local box", barrier: "Your barrier", allowed: "Access granted", offline: "Works offline" },
   },
   numbers: [
     { value: 157, decimals: 0, suffix: "", label: "users surveyed in Algiers" },
@@ -65,13 +65,13 @@ export const en = {
     eyebrow: "How it works",
     title: "Five steps, all on site.",
     steps: [
-      { title: "LPR camera", text: "Fast shutter, WDR, infrared — reads plates day and night." },
+      { title: "License plate recognition camera", text: "Fast shutter, WDR, infrared — reads plates day and night." },
       { title: "Local box", text: "Detection + OCR trained for Algerian plates." },
       { title: "Local decision", text: "Embedded allow-list, no cloud call." },
       { title: "Dry contact", text: "Triggers your existing barrier." },
       { title: "Local log", text: "Deferred sync once connectivity returns." },
     ],
-    flow: ["Camera LPR", "Local box", "Identification", "Decision", "Barrier"],
+    flow: ["License plate recognition", "Local box", "Identification", "Decision", "Barrier"],
     stepLabel: "Step",
   },
   resilience: {
