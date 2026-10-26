@@ -85,7 +85,7 @@ export function Bars({ data, max, unit = "%", accent = "brand" }: { data: { labe
   return (
     <ul className="space-y-4">
       {data.map((d, i) => (
-        <li key={d.label}>
+        <li key={i}>
           <div className="mb-1.5 flex items-baseline justify-between gap-3 text-sm">
             <span className="text-foreground">{d.label}</span>
             <span className="shrink-0 font-semibold tabular-nums text-foreground" dir="ltr">{d.value}{unit === "%" ? "%" : ` ${unit}`}</span>

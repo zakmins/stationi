@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Award, Building2, Check, ChevronDown, Gauge, Menu, MoonStar, SunMedium, X } from "lucide-react";
-import { useI18n, languages, type Lang } from "@/i18n/context";
+import { useI18n, languages } from "@/i18n/context";
 import { CtaButton, Counter, Reveal } from "./ui";
 import { cn } from "@/lib/utils";
 
@@ -72,20 +71,12 @@ export function ThemeToggle() {
 }
 
 export function LangSwitch() {
-  const { lang } = useI18n();
+  const { lang, setLang } = useI18n();
   const [open, setOpen] = useState(false);
-  const [pendingLang, setPendingLang] = useState<Lang | null>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const confirmRef = useRef<HTMLButtonElement>(null);
-  const dialogRef = useRef<HTMLElement>(null);
   const selected = languages.find((language) => language.code === lang) ?? languages[0]!;
   const languageNames = { ar: "العربية", fr: "Français", en: "English" };
-  const confirmationCopy = {
-    en: { title: "Change language?", message: "The page will refresh to apply your language selection.", cancel: "Cancel", confirm: "Change language" },
-    fr: { title: "Changer de langue ?", message: "La page va s’actualiser pour appliquer votre choix de langue.", cancel: "Annuler", confirm: "Changer de langue" },
-    ar: { title: "هل تريد تغيير اللغة؟", message: "سيتم تحديث الصفحة لتطبيق اختيارك للغة.", cancel: "إلغاء", confirm: "تغيير اللغة" },
-  }[lang];
 
   useEffect(() => {
     if (!open) return;
@@ -105,46 +96,6 @@ export function LangSwitch() {
       document.removeEventListener("keydown", closeOnKeyDown);
     };
   }, [open]);
-
-  useEffect(() => {
-    if (!pendingLang) return;
-    confirmRef.current?.focus();
-    const closeOnKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setPendingLang(null);
-        triggerRef.current?.focus();
-        return;
-      }
-      if (event.key !== "Tab") return;
-
-      const focusable = dialogRef.current?.querySelectorAll<HTMLElement>(
-        'button:not([disabled]), [href], input:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      );
-      if (!focusable?.length) return;
-      const first = focusable[0]!;
-      const last = focusable[focusable.length - 1]!;
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    document.addEventListener("keydown", closeOnKeyDown);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", closeOnKeyDown);
-    };
-  }, [pendingLang]);
-
-  const confirmLanguageChange = () => {
-    if (!pendingLang) return;
-    localStorage.setItem("stationi-lang", pendingLang);
-    window.location.reload();
-  };
 
   return (
     <>
@@ -192,7 +143,8 @@ export function LangSwitch() {
                 aria-checked={lang === language.code}
                 onClick={() => {
                   setOpen(false);
-                  if (lang !== language.code) setPendingLang(language.code);
+                  if (lang !== language.code) setLang(language.code);
+                  triggerRef.current?.focus();
                 }}
                 className={cn(
                   "mt-1 flex w-full cursor-pointer items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-start transition-colors duration-200",
@@ -225,66 +177,6 @@ export function LangSwitch() {
         )}
       </AnimatePresence>
     </div>
-    {typeof document !== "undefined" && createPortal(
-      <AnimatePresence>
-        {pendingLang && (
-          <motion.div
-            className="fixed inset-0 z-[100] grid place-items-center bg-black/60 p-4 backdrop-blur-md"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onMouseDown={(event) => {
-              if (event.target === event.currentTarget) {
-                setPendingLang(null);
-                triggerRef.current?.focus();
-              }
-            }}
-          >
-            <motion.section
-              ref={dialogRef}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="language-confirm-title"
-              aria-describedby="language-confirm-description"
-              dir={lang === "ar" ? "rtl" : "ltr"}
-              className="w-full max-w-sm rounded-3xl border border-border bg-card p-6 text-card-foreground shadow-lift"
-              initial={{ opacity: 0, y: 12, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 8, scale: 0.98 }}
-              transition={{ duration: 0.24, ease: [0.32, 0.72, 0, 1] }}
-            >
-            <div className="mb-5 grid size-11 place-items-center rounded-2xl bg-brand-soft text-brand">
-              <span className="text-xs font-bold tracking-wide">{languages.find((language) => language.code === pendingLang)?.label}</span>
-            </div>
-            <h2 id="language-confirm-title" className="text-xl font-semibold">{confirmationCopy.title}</h2>
-            <p id="language-confirm-description" className="mt-2 text-sm leading-relaxed text-muted-foreground">{confirmationCopy.message}</p>
-            <div className="mt-7 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-              <button
-                type="button"
-                onClick={() => {
-                  setPendingLang(null);
-                  triggerRef.current?.focus();
-                }}
-                className="inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg border border-border bg-background px-5 text-sm font-semibold text-foreground transition-all duration-200 hover:-translate-y-0.5 hover:border-brand/50 hover:bg-muted active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                {confirmationCopy.cancel}
-              </button>
-              <button
-                ref={confirmRef}
-                type="button"
-                onClick={confirmLanguageChange}
-                className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-lg bg-cta px-5 text-sm font-semibold text-cta-foreground shadow-soft transition-all duration-200 hover:-translate-y-0.5 hover:brightness-105 hover:shadow-lift active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                {confirmationCopy.confirm}
-                <ArrowRight className="size-4 rtl:rotate-180" aria-hidden="true" />
-              </button>
-            </div>
-            </motion.section>
-          </motion.div>
-        )}
-      </AnimatePresence>,
-      document.body,
-    )}
     </>
   );
 }
@@ -432,7 +324,7 @@ export function Hero() {
   return (
     <section id="top" className="relative flex min-h-[calc(100svh-4.5rem)] items-center overflow-hidden pb-16 pt-12 md:pb-24 md:pt-20">
       <div className="container-page grid items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
-        <div>
+        <div className="min-w-0">
           <Reveal><p className="eyebrow">{t.hero.eyebrow}</p></Reveal>
           <Reveal delay={0.05}>
             <h1 className="mt-5 max-w-[680px] bg-gradient-to-r from-foreground via-foreground/80 to-foreground/55 bg-clip-text text-4xl font-semibold leading-[1.08] text-transparent sm:text-5xl lg:text-6xl">
@@ -450,14 +342,14 @@ export function Hero() {
             {t.hero.badges.map((b, i) => {
               const I = icons[i] ?? Award;
               return (
-                <span key={b} className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium text-foreground">
+                <span key={i} className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium text-foreground">
                   <I className="size-3.5 text-brand" /> {b}
                 </span>
               );
             })}
           </Reveal>
         </div>
-        <Reveal delay={0.1} className="lg:translate-x-8 xl:translate-x-12"><HeroVisual /></Reveal>
+        <Reveal delay={0.1} className="min-w-0 lg:translate-x-8 xl:translate-x-12"><HeroVisual /></Reveal>
       </div>
     </section>
   );

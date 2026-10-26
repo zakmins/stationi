@@ -15,7 +15,7 @@ export function Roadmap() {
         <ol className="relative mt-12 grid gap-5 md:grid-cols-4">
           <div className="absolute inset-x-0 top-5 hidden h-0.5 bg-border md:block" />
           {t.roadmap.phases.map((p, i) => (
-            <Reveal key={p.m} delay={i * 0.07} className="relative">
+            <Reveal key={i} delay={i * 0.07} className="relative">
               <span className={cn("relative grid size-10 place-items-center rounded-full text-sm font-bold", i === 1 ? "bg-cta text-cta-foreground" : "bg-primary text-primary-foreground")}>{i + 1}</span>
               <p className="mt-4 text-xs font-semibold tracking-widest text-brand" dir="ltr" style={{ textAlign: "start" }}>{p.m}</p>
               <h3 className="mt-1 font-semibold text-foreground">{p.title}</h3>
@@ -37,7 +37,7 @@ export function Team() {
         <SectionHead eyebrow={t.team.eyebrow} title={t.team.title} />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {t.team.members.map((m, i) => (
-            <Reveal key={m.name} delay={i * 0.06} className="card-base p-6">
+            <Reveal key={i} delay={i * 0.06} className="card-base p-6">
               <div className="grid size-14 place-items-center rounded-full bg-brand-soft font-serif text-lg font-bold text-brand">
                 {m.name.split(" ").slice(0, 2).map((w) => w[0]).join("")}
               </div>
@@ -89,7 +89,7 @@ export function Pilot() {
           <h2 className="text-3xl font-semibold leading-tight md:text-4xl">{p.title}<br /><span className="text-cta">{p.title2}</span></h2>
           <p className="mt-5 max-w-md text-navy-muted dark:text-process-muted">{p.sub}</p>
         </Reveal>
-        <Reveal delay={0.08} className="rounded-lg bg-card p-6 text-foreground shadow-lift md:p-8 dark:bg-process-card dark:text-process-foreground">
+        <Reveal delay={0.08} className="min-w-0 rounded-lg bg-card p-6 text-foreground shadow-lift md:p-8 dark:bg-process-card dark:text-process-foreground">
           {done ? (
             <div className="py-10 text-center">
               <CheckCircle2 className="mx-auto size-12 text-success" />

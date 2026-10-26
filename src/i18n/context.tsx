@@ -11,7 +11,11 @@ export const languages: { code: Lang; label: string }[] = [
   { code: "en", label: "EN" },
 ];
 
-const Ctx = createContext<{ lang: Lang; t: Dict; setLang: (l: Lang) => void }>({ lang: "fr", t: fr, setLang: () => {} });
+const Ctx = createContext<{ lang: Lang; t: Dict; setLang: (l: Lang) => void }>({
+  lang: "fr",
+  t: fr,
+  setLang: () => {},
+});
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("fr");
@@ -25,6 +29,9 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     document.documentElement.dir = d.meta.dir;
   }, [lang]);
   const setLang = (l: Lang) => {
+    const metadata = dictionaries[l].meta;
+    document.documentElement.lang = metadata.lang;
+    document.documentElement.dir = metadata.dir;
     setLangState(l);
     localStorage.setItem("stationi-lang", l);
   };

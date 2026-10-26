@@ -16,9 +16,9 @@ export function Problem() {
             {t.problem.cards.map((c, i) => {
               const I = icons[i] ?? Zap;
               return (
-                <Reveal key={c.title} delay={i * 0.06} className="card-base flex gap-4 p-5">
+                <Reveal key={i} delay={i * 0.06} className="card-base flex min-w-0 gap-4 p-5">
                   <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><I className="size-5" /></div>
-                  <div><h3 className="font-semibold text-foreground">{c.title}</h3><p className="mt-1 text-sm leading-relaxed text-muted-foreground">{c.text}</p></div>
+                  <div className="min-w-0"><h3 className="font-semibold text-foreground">{c.title}</h3><p className="mt-1 text-sm leading-relaxed text-muted-foreground">{c.text}</p></div>
                 </Reveal>
               );
             })}
@@ -42,7 +42,7 @@ export function Evidence() {
         <SectionHead eyebrow={e.eyebrow} title={e.title} />
         <div className="mt-12 grid gap-5 md:grid-cols-3">
           {e.cases.map((c, i) => (
-            <Reveal key={c.title} delay={i * 0.06} className="card-base flex flex-col overflow-hidden">
+            <Reveal key={i} delay={i * 0.06} className="card-base flex min-w-0 flex-col overflow-hidden">
               <div className="aspect-[16/9] overflow-hidden border-b border-border bg-secondary">
                 <img
                   src={["/bz.jpg", "/gr.jpg", "/ar.jpg"][i]}
@@ -76,7 +76,7 @@ export function Shortfall() {
         <SectionHead eyebrow={t.shortfall.eyebrow} title={t.shortfall.title} />
         <div className="mt-12 grid gap-5 md:grid-cols-3">
           {t.shortfall.cols.map((c, i) => (
-            <Reveal key={c.title} delay={i * 0.06} className="card-base p-6">
+            <Reveal key={i} delay={i * 0.06} className="card-base min-w-0 p-6">
               <XCircle className="size-6 text-destructive" />
               <h3 className="mt-4 font-semibold text-foreground">{c.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.text}</p>
@@ -99,7 +99,7 @@ export function How() {
           {t.how.steps.map((s, i) => {
             const I = icons[i] ?? Zap;
             return (
-              <li key={s.title} className="list-none">
+              <li key={i} className="list-none">
                 <Reveal delay={i * 0.07} className="h-full">
                   <div className="group h-full rounded-2xl border border-process-border bg-process-card p-5 text-process-foreground shadow-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:border-brand/50 hover:shadow-lift">
                   <div className="flex items-center justify-between">
@@ -117,7 +117,7 @@ export function How() {
         </ol>
         <Reveal className="mt-10 flex flex-wrap items-center justify-center gap-2 text-xs font-medium">
           {t.how.flow.map((f, i) => (
-            <span key={f} className="flex items-center gap-2">
+            <span key={i} className="flex items-center gap-2">
               <span className="rounded-full border border-process-border bg-process-card px-3 py-1.5 text-process-muted">{f}</span>
               {i < t.how.flow.length - 1 && <span className="text-cta rtl:rotate-180">→</span>}
             </span>
@@ -156,11 +156,11 @@ export function Resilience() {
         <div className="mt-12 grid gap-5 md:grid-cols-2">
           <Reveal className="rounded-2xl border border-destructive/30 bg-card p-6">
             <h3 className="flex items-center gap-2 font-semibold text-foreground"><Cloud className="size-5 text-destructive" />{r.left.title}</h3>
-            <ul className="mt-5 space-y-3">{r.left.items.map((x) => <li key={x} className="flex gap-2.5 text-sm text-muted-foreground"><AlertTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />{x}</li>)}</ul>
+            <ul className="mt-5 space-y-3">{r.left.items.map((x, i) => <li key={i} className="flex gap-2.5 text-sm text-muted-foreground"><AlertTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />{x}</li>)}</ul>
           </Reveal>
           <Reveal delay={0.08} className="rounded-2xl border-2 border-success/40 bg-success-soft p-6">
             <h3 className="flex items-center gap-2 font-semibold text-foreground"><HardDrive className="size-5 text-success" />{r.right.title}</h3>
-            <ul className="mt-5 space-y-3">{r.right.items.map((x) => <li key={x} className="flex gap-2.5 text-sm text-foreground"><CheckCircle2 className="mt-0.5 size-4 shrink-0 text-success" />{x}</li>)}</ul>
+            <ul className="mt-5 space-y-3">{r.right.items.map((x, i) => <li key={i} className="flex gap-2.5 text-sm text-foreground"><CheckCircle2 className="mt-0.5 size-4 shrink-0 text-success" />{x}</li>)}</ul>
           </Reveal>
         </div>
         <Reveal><p className="mt-10 text-center font-serif text-2xl font-semibold text-foreground md:text-3xl">« {r.closing} »</p></Reveal>
@@ -193,11 +193,11 @@ export function Segments() {
         <div className="card-base mt-6 grid gap-8 p-6 md:grid-cols-2 md:p-8">
           <div>
             <div className="flex flex-wrap gap-2">
-              {s.core.map((c) => <span key={c} className="rounded-lg bg-navy px-3 py-2 text-sm font-semibold text-navy-foreground">{c}</span>)}
+              {s.core.map((c, i) => <span key={i} className="rounded-lg bg-navy px-3 py-2 text-sm font-semibold text-navy-foreground">{c}</span>)}
             </div>
             <div className="my-3 h-6 w-0.5 bg-border ms-6" />
             <div className="flex flex-wrap gap-2">
-              {tab.rules.map((r) => <span key={r} className="rounded-lg border border-brand/30 bg-brand-soft px-3 py-2 text-sm font-medium text-brand">{r}</span>)}
+              {tab.rules.map((r, i) => <span key={i} className="rounded-lg border border-brand/30 bg-brand-soft px-3 py-2 text-sm font-medium text-brand">{r}</span>)}
             </div>
           </div>
           <div className="flex flex-col justify-center">
@@ -222,7 +222,7 @@ export function Why() {
           {t.why.cards.map((c, i) => {
             const I = icons[i] ?? Zap;
             return (
-              <Reveal key={c.title} delay={i * 0.06} className="h-full">
+              <Reveal key={i} delay={i * 0.06} className="h-full">
                 <article className="group card-base h-full p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1.5 hover:border-brand/40 hover:shadow-lift">
                   <div className="grid size-11 place-items-center rounded-xl bg-cta/15 text-cta transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-110 group-hover:bg-cta/25">
                     <I className="size-5 transition-transform duration-500 group-hover:rotate-[-8deg]" />
@@ -273,8 +273,8 @@ export function Product() {
             <table className="w-full text-sm">
               <thead className="bg-muted text-start"><tr><th className="p-4 text-start font-semibold">{p.component}</th><th className="p-4 text-start font-semibold">{p.status}</th></tr></thead>
               <tbody>
-                {p.rows.map((r) => (
-                  <tr key={r.name} className="border-t border-border">
+                {p.rows.map((r, i) => (
+                  <tr key={i} className="border-t border-border">
                     <td className="p-4 text-foreground">{r.name}</td>
                     <td className="p-4"><span className={cn("whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-semibold", tone[r.status as keyof typeof tone])}>{p.statuses[r.status as keyof typeof p.statuses]}</span></td>
                   </tr>
