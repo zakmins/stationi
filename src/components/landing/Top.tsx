@@ -362,7 +362,7 @@ export function Numbers() {
       <div className="container-page grid grid-cols-2 gap-8 lg:grid-cols-4">
         {t.numbers.map((n, i) => (
           <Reveal key={i} delay={i * 0.08}>
-            <p className="font-serif text-4xl font-semibold md:text-5xl" dir="ltr" style={{ textAlign: "start" }}>
+            <p className="text-left font-serif text-4xl font-semibold md:text-5xl rtl:text-right" dir="ltr">
               <Counter value={n.value} decimals={n.decimals} locale={lang} />
               <span className="text-2xl text-stats-accent">{n.suffix}</span>
             </p>

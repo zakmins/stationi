@@ -40,9 +40,9 @@ export const fr: Dict = {
   evidence: {
     eyebrow: "Preuves terrain",
     title: "Trois cas documentés sur site (Alger)",
-    chartTitle: "Temps d'attente observé à la sortie (minutes)",
+    chartTitle: "Temps d'attente moyen à la sortie (minutes)",
     chart: [
-      { label: "Université", value: 7 },
+      { label: "Parking communal", value: 7 },
       { label: "Garden City", value: 30 },
       { label: "Aéroport (panne système)", value: 60 },
     ],

@@ -38,9 +38,9 @@ export const en = {
   evidence: {
     eyebrow: "Field evidence",
     title: "Three cases documented on site (Algiers)",
-    chartTitle: "Observed exit wait time (minutes)",
+    chartTitle: "Average waiting time at exit (minutes)",
     chart: [
-      { label: "University", value: 7 },
+      { label: "Municipal parking", value: 7 },
       { label: "Garden City", value: 30 },
       { label: "Airport (system failure)", value: 60 },
     ],
